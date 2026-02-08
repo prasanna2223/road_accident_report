@@ -1,0 +1,59 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container-fluid px-3">
+    <h1>Accident Reports</h1>
+
+    <a href="{% url 'accident_create' %}" class="btn btn-primary-custom">+ Add Accident</a>
+<div class="table-responsive">
+    <table class="table table-bordered table-striped">
+        <thead class="table-primary">
+        <tr>
+            <th>#</th>
+            <th>Reporter</th>
+            <th>Phone</th>
+            <th>Location</th>
+            <th>City</th>
+            <th>Date</th>
+            <th>Vehicle</th>
+            <th>Severity</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        {% for accident in accidents %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ accident.reporter_name }}</td>
+            <td>{{ accident.phone_number }}</td>
+            <td>{{ accident.location }}</td>
+            <td>{{ accident.city }}</td>
+            <td>{{ accident.accident_date }}</td>
+            <td>{{ accident.vehicle_type }}</td>
+            <td>{{ accident.severity }}</td>
+            <td>{{ accident.status }}</td>
+            <td class="actions">
+                <a href="{% url 'accident_update' accident.id %}" class="btn btn-edit">Edit</a>
+
+                  {% csrf_token %}
+
+                    <a href="{% url 'accident_delete' accident.id %}" class="btn btn-delete">Delete</a>
+                </form>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="10">No accident reports found</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+</div>
+
+{% endblock %}
+

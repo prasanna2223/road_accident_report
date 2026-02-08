@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    
+
+<div class="container">
+    <h2>{% if accident %}Update{% else %}Add{% endif %} Accident</h2>
+
+    <form method="post">
+        {% csrf_token %}
+
+        <label>Reporter Name</label>
+        <input type="text" name="reporter_name"
+               value="{{ accident.reporter_name|default:'' }}" required>
+
+        <label>Phone Number</label>
+        <input type="text" name="phone_number"
+               value="{{ accident.phone_number|default:'' }}" required>
+
+        <label>Location</label>
+        <input type="text" name="location"
+               value="{{ accident.location|default:'' }}" required>
+
+        <label>City</label>
+        <input type="text" name="city"
+               value="{{ accident.city|default:'' }}" required>
+
+        <label>State</label>
+        <input type="text" name="state"
+               value="{{ accident.state|default:'' }}" required>
+
+        <label>Accident Date</label>
+        <input type="date" name="accident_date"
+               value="{{ accident.accident_date|default:'' }}">
+
+        <label>Accident Time</label>
+        <input type="time" name="accident_time"
+               value="{{ accident.accident_time|default:'' }}">
+
+        <label>Vehicle Type</label>
+        <select name="vehicle_type" required>
+            <option value="">-- Select Vehicle --</option>
+            <option value="Car" {% if accident.vehicle_type == "Car" %}selected{% endif %}>Car</option>
+            <option value="Bike" {% if accident.vehicle_type == "Bike" %}selected{% endif %}>Bike</option>
+            <option value="Truck" {% if accident.vehicle_type == "Truck" %}selected{% endif %}>Truck</option>
+            <option value="Bus" {% if accident.vehicle_type == "Bus" %}selected{% endif %}>Bus</option>
+        </select>
+
+        <label>Severity</label>
+        <select name="severity" required>
+            <option value="">-- Select Severity --</option>
+            <option value="Low" {% if accident.severity == "Low" %}selected{% endif %}>Low</option>
+            <option value="Medium" {% if accident.severity == "Medium" %}selected{% endif %}>Medium</option>
+            <option value="High" {% if accident.severity == "High" %}selected{% endif %}>High</option>
+        </select>
+
+        <label>Description</label>
+        <textarea name="description" rows="4">{{ accident.description|default:'' }}</textarea>
+{% if user.is_staff %}
+        <label>Status</label>
+        <select name="status">
+            <option value="Pending" {% if accident.status == "Pending" %}selected{% endif %}>Pending</option>
+            <option value="Resolved" {% if accident.status == "Resolved" %}selected{% endif %}>Resolved</option>
+        </select>
+{% endif %}
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-add">Save</button>
+            <a href="{% url 'acci_list' %}" class="btn btn-cancel">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,16 @@
+<h2>Admin Login</h2>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Admin Login</button>
+</form>
+
+{% if error %}
+<p style="color:red">{{ error }}</p>
+{% endif %}
+
+<p>
+    User?
+    <a href="{% url 'user_login' %}">User login</a>
+</p>

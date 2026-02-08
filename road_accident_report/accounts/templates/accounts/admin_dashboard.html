@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard</title>
+</head>
+<body>
+
+<h2>Admin Dashboard</h2>
+<p>Welcome, <b>{{ request.user.username }}</b></p>
+
+<hr>
+
+<h3>📊 Overview</h3>
+<ul>
+    <li>Total Accidents: {{ total_accidents }}</li>
+    <li>Pending: {{ pending_accidents }}</li>
+    <li>Resolved: {{ resolved_accidents }}</li>
+</ul>
+
+<h3>🚦 Severity</h3>
+<ul>
+    <li>High: {{ severe_count }}</li>
+    <li>Medium: {{ medium_count }}</li>
+    <li>Low: {{ low_count }}</li>
+</ul>
+
+<h3>🕒 Recent Accidents</h3>
+<table border="1" cellpadding="5">
+    <tr>
+        <th>Reporter</th>
+        <th>City</th>
+        <th>Date</th>
+        <th>Status</th>
+    </tr>
+    {% for acc in recent_accidents %}
+    <tr>
+        <td>{{ acc.reporter_name }}</td>
+        <td>{{ acc.city }}</td>
+        <td>{{ acc.accident_date }}</td>
+        <td>{{ acc.status }}</td>
+    </tr>
+    {% empty %}
+    <tr>
+        <td colspan="4">No data</td>
+    </tr>
+    {% endfor %}
+</table>
+
+<br>
+
+<a href="{% url 'acci_list' %}">View All Accidents</a> |
+<a href="{% url 'logout' %}">Logout</a>
+
+</body>
+</html>
